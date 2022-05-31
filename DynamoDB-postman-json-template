@@ -1,0 +1,96 @@
+ # DynamoDB-postman-json-template
+
+# Create table entries
+{
+    "productId": "1003",
+    "color": "red",
+    "decription": "apple",
+    "price": "37",
+    "quantity": "3 boxes"
+}
+
+
+{
+    "productId": "1005",
+    "color": "blue",
+    "decription": "mango",
+    "price": "50"
+}
+
+
+{
+    "productId": "1006",
+    "color": "redden",
+    "decription": "bananas",
+    "price": "15"
+}
+
+
+{
+    "productId": "1007",
+    "color": "blueless",
+    "decription": "mangoes",
+    "price": "550"
+}
+
+
+# Get produts output
+{
+    "products": [
+        {
+            "decription": "mangoes",
+            "price": "550",
+            "productId": "1007",
+            "color": "blueless"
+        },
+        {
+            "decription": "mango",
+            "price": "50",
+            "productId": "1002",
+            "color": "blue"
+        },
+        {
+            "price": 10.0,
+            "productId": "1001",
+            "color": "red"
+        },
+        {
+            "decription": "apple",
+            "quantity": "3 boxes",
+            "price": "37",
+            "productId": "1003",
+            "color": "red"
+        },
+        {
+            "decription": "mango",
+            "price": "50",
+            "productId": "1005",
+            "color": "blue"
+        },
+        {
+            "decription": "bananas",
+            "price": "15",
+            "productId": "1006",
+            "color": "redden"
+        }
+    ]
+}
+
+# patch or update entries 
+
+{
+    "productId": "1003",
+    "updateKey": "price",
+    "updateValue": "600"
+}
+
+# Delete product entry 
+
+{
+    "productId": "1003"
+}
+
+
+
+API gateway endpoint 
+https://2uedc8cdpc.execute-api.us-east-1.amazonaws.com/dev/product
