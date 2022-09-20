@@ -1,0 +1,17 @@
+productID = user_name
+
+products = admins
+
+product = user
+
+{
+	"user_name": "jn544",
+	"service_name": "ceres",
+	"priviledges": "read, write"
+}
+
+{
+	"user_name": "jb101",
+	"service_name": "ceres",
+	"priviledges": "read, write"
+}
