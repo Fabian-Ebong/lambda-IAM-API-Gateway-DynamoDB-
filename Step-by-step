@@ -1,0 +1,22 @@
+IAM
+Create IAM role and policy 
+IAM role:
+IAM Policy: 
+
+Lambda
+Lambda function name:
+Runtime: python 3.9
+Timeout: 4 mins
+Temp storage: 512 mb
+
+DynamoDB
+Table Name:
+Primary Key:
+Sort key:
+
+
+
+API Gateway
+
+Postman
+
