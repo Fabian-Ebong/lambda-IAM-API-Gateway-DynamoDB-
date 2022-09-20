@@ -1,0 +1,65 @@
+$ cat ~/.aws/config
+[default]
+output = table
+region = us-east-1
+
+$ cat ~/.aws/credentials
+[Fabian]
+aws_access_key_id = AKIAZVO3
+aws_secret_access_key = WT92
+aws dynamodb describe-table  --table-name Etitlements5
+
+Could not connect to the endpoint URL: "https://dynamodb.us-east-1.amazonaws.com/"
+
+
+aws dynamodb create-table \
+    --table-name Entitlements5 \
+    --attribute-definitions AttributeName=user_name,AttributeType=S AttributeName=service_name,AttributeType=S \
+    --key-schema AttributeName=user_name,KeyType=HASH AttributeName=service_name,KeyType=RANGE \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+	
+aws dynamodb put-item \
+    --table-name Entitlements5 \
+    --item '{
+        "user_name": {"S": "abc"},
+        "service_name": {"S": "ceres"} ,
+        "AlbumTitle": {"S": "read, write, admin"} 
+      }' \
+    --return-consumed-capacity TOTAL
+
+aws dynamodb put-item \
+    --table-name Entitlements5 \
+    --item '{ 
+        "user_name": {"S": "abc"},
+        "service_name": {"S": "report-center"} ,
+        "AlbumTitle": {"S": "read, write, admin"}  
+      }' \
+    --return-consumed-capacity TOTAL
+	
+aws dynamodb put-item \
+    --table-name Entitlements5 \
+    --item '{ 
+        "user_name": {"S": "xyz"},
+        "service_name": {"S": "report-center"} ,
+        "priviledges": {"M": {"Name": {"S": "Joe"}, "Age": {"N": "35"}}}  
+      }' \
+    --return-consumed-capacity TOTAL
+	
+aws dynamodb put-item \
+    --table-name Entitlements5 \
+    --item '{ 
+        "user_name": {"S": "xyz"},
+        "service_name": {"S": "report-center"} ,
+        "priviledges": {"M": {"entintlement_value": {"S": "E1"},"entintlement_number": {"N": "1"}}}  
+      }' \
+    --return-consumed-capacity TOTAL
+
+aws dynamodb query \
+    --table-name MusicCollection \
+    --key-condition-expression "Artist = :name" \
+    --expression-attribute-values  '{":name":{"S":"Acme Band"}}'
+	
+aws dynamodb query \
+    --table-name MusicCollection \
+    --key-condition-expression "Artist = :Acme Band" \
+    --expression-attribute-values  '{":name":{"S":"Acme Band"}}'
