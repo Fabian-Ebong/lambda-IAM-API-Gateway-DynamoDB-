@@ -1,0 +1,103 @@
+Okta setup
+Blog: https://awskarthik82.medium.com/part-3-securing-aws-api-gateway-using-jwt-authorizer-okta-jwt-access-token-cb2c9425b026
+
+Application
+	Application
+	Create a new app integration
+	API Services --> Next
+	New API Services App Integration : AWSJWTAutzClient --> create
+Note 
+Username or client ID: 0oa6lpbbfrgxLggth5d7
+password or client secrets: _AISWE_b-RYiwyyyxurr8ZprL_eB-ZbWF-G6GpXK
+
+
+Security
+API
+Add Authorization Server
+Name : AWSAPIGatewayTest
+Audience : api://jwtauthtest
+Description: NA
+
+
+scope
+Add Scope
+Name: jwtread
+Display phrase : JWT Read
+Description: JWT Read
+Default scope: select "Set as a default scope"
+
+Policy
+Add Policy
+Name: JWTAuthPolicy
+Description: JWTAuthPolicy
+Assign to: all clients --> create
+
+Rule
+Add Rule
+Rule Name : JWTAuthRule
+Grant type: select only "Client Credentials"
+
+
+{"issuer":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7","authorization_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/authorize","token_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/token","registration_endpoint":"https://dev-33122808.okta.com/oauth2/v1/clients","jwks_uri":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/keys","response_types_supported":["code","token","id_token","code id_token","code token","id_token token","code id_token token"],"response_modes_supported":["query","fragment","form_post","okta_post_message"],"grant_types_supported":["authorization_code","implicit","refresh_token","password","client_credentials","urn:ietf:params:oauth:grant-type:device_code"],"subject_types_supported":["public"],"scopes_supported":["okta.myAccount.customAuthenticator.manage","okta.myAccount.customAuthenticator.read","okta.myAccount.email.manage","okta.myAccount.email.read","okta.myAccount.manage","okta.myAccount.phone.manage","okta.myAccount.phone.read","okta.myAccount.profile.manage","okta.myAccount.profile.read","okta.myAccount.read","openid","profile","email","address","phone","offline_access","device_sso"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"claims_supported":["ver","jti","iss","aud","iat","exp","cid","uid","scp","sub"],"code_challenge_methods_supported":["S256"],"introspection_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/introspect","introspection_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"revocation_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/revoke","revocation_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"end_session_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/logout","request_parameter_supported":true,"request_object_signing_alg_values_supported":["HS256","HS384","HS512","RS256","RS384","RS512","ES256","ES384","ES512"],"device_authorization_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/device/authorize","pushed_authorization_request_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/par"}
+
+
+token_endpoint":"https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/token"
+open post man
+select post method, url = https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7/v1/token
+select authorization
+Username or client ID: 0oa6lpbbfrgxLggth5d7
+password or client secrets: _AISWE_b-RYiwyyyxurr8ZprL_eB-ZbWF-G6GpXK
+Select Body
+select x-www-form-urlencoded
+key = grant_type
+value = cleint_credentials
+hit send and you will receive the below response:
+
+{
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "access_token": "eyJraWQiOiJ4eC1Ld1M4VHJDSWJIZjNFbUtDZmVCR2ZyN3NIeWpXNzJOUUROY3JieVZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmV1ZElmNGhsdGNuWEY1UVdpdlltSzhlX2dBTFdEanFyV1JLRXdWVUJ5d0UiLCJpc3MiOiJodHRwczovL2Rldi0zMzEyMjgwOC5va3RhLmNvbS9vYXV0aDIvYXVzNmxwZmltNVlFVzhkYVk1ZDciLCJhdWQiOiJhcGk6Ly9qd3RhdXRodGVzdCIsImlhdCI6MTY2MzgxNzMwOCwiZXhwIjoxNjYzODIwOTA4LCJjaWQiOiIwb2E2bHBiYmZyZ3hMZ2d0aDVkNyIsInNjcCI6WyJqd3RyZWFkIl0sInN1YiI6IjBvYTZscGJiZnJneExnZ3RoNWQ3In0.NXFwHB0LSJ095B12M_ikGgi3QRAvlFnOUF7Mhl0ORcktR03A3g1RYfBVI8Vr_3jmDnKKJPk2R__toOeW6ats_WHfmMthq9QSSw2chATiKnwFasu31o0kKY5OgqnfjYKAqgpPj3_oaVxUtZVS9yHt7YBRGsSGHGcckv7VOPnB_j4s8_T6M4g_k0s_4m7Nmgc_sR2SBGcb99DSpiyfSQpJd4rVqv75cx5UqTpIs7MJnbehBh1yW6127zYXZlRMRD7f32RJNahuJc3vQ-fPaQE141V1Vkqs3sWK8cY1ywhlmcOBKJmRiz42p-FxbiLUGGP3faaqzcIIeQS-KOhtuEwW5w",
+    "scope": "jwtread"
+}
+
+
+You can verify the token by opening jwt.io
+paste the token
+
+eyJraWQiOiJ4eC1Ld1M4VHJDSWJIZjNFbUtDZmVCR2ZyN3NIeWpXNzJOUUROY3JieVZvIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmV1ZElmNGhsdGNuWEY1UVdpdlltSzhlX2dBTFdEanFyV1JLRXdWVUJ5d0UiLCJpc3MiOiJodHRwczovL2Rldi0zMzEyMjgwOC5va3RhLmNvbS9vYXV0aDIvYXVzNmxwZmltNVlFVzhkYVk1ZDciLCJhdWQiOiJhcGk6Ly9qd3RhdXRodGVzdCIsImlhdCI6MTY2MzgxNzMwOCwiZXhwIjoxNjYzODIwOTA4LCJjaWQiOiIwb2E2bHBiYmZyZ3hMZ2d0aDVkNyIsInNjcCI6WyJqd3RyZWFkIl0sInN1YiI6IjBvYTZscGJiZnJneExnZ3RoNWQ3In0.NXFwHB0LSJ095B12M_ikGgi3QRAvlFnOUF7Mhl0ORcktR03A3g1RYfBVI8Vr_3jmDnKKJPk2R__toOeW6ats_WHfmMthq9QSSw2chATiKnwFasu31o0kKY5OgqnfjYKAqgpPj3_oaVxUtZVS9yHt7YBRGsSGHGcckv7VOPnB_j4s8_T6M4g_k0s_4m7Nmgc_sR2SBGcb99DSpiyfSQpJd4rVqv75cx5UqTpIs7MJnbehBh1yW6127zYXZlRMRD7f32RJNahuJc3vQ-fPaQE141V1Vkqs3sWK8cY1ywhlmcOBKJmRiz42p-FxbiLUGGP3faaqzcIIeQS-KOhtuEwW5w
+
+you will see the same issuer, scope, as what was provided by Okta 
+
+
+API SETUP
+HTTP API
+Api Name: oktajwtauthapi
+Routes
+create a route
+method : Get
+value: /users
+Create and attach integration
+select HTTP URI
+HTTP Method: Get
+URL: https://jsonplaceholder.typicode.com/users
+Free fake API for testing and prototyping.
+https://jsonplaceholder.typicode.com/users
+
+Postman test
+copy HTTP invokation URL https://gfpzgvc6pk.execute-api.us-east-1.amazonaws.com/users
+select get metthod
+hit send and you will get the users from the above url
+
+
+Setup authorization
+In Api Gateway
+select the correct api and 
+Authorization
+create authorizer
+select JWT
+Name: OktaJWTAuth
+Issue: https://dev-33122808.okta.com/oauth2/aus6lpfim5YEW8daY5d7
+Audience: api://jwtauthtest
+
+Authorization Scopes
+scope: jwtread
