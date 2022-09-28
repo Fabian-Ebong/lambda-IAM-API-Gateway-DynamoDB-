@@ -8,3 +8,19 @@
         
     }
 }
+
+
+
+
+
+{
+    "TableName": "apidemo",
+    "PrimaryKey": "id",
+    "KeyConditionExpession": "id = :v1",
+    "ExpressionAtrributeValues": {
+        ":v1": {
+            "S": "$input.params('id')"
+        }
+    }
+    
+}
