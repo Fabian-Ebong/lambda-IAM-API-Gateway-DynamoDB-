@@ -24,3 +24,16 @@
     }
     
 }
+
+
+
+{
+    "TableName": "apidemo",
+    "Item": {
+        "id": {"S": "$context.requestId"},
+        "Message": {"S": $input.json('$.message')},
+        "token": {"S": "$input.params('tokenvalue')"}
+        
+    }
+}
+
