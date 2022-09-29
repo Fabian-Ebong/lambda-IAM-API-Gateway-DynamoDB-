@@ -37,3 +37,15 @@
     }
 }
 
+
+{
+    "TableName": "tst",
+    "PrimaryKey": "myid",
+    "KeyConditionExpression": "myid = :v1",
+    "ExpressionAttributeValues": {
+        ":v1": {
+            "S": "$input.params('myid')"
+        }
+    }
+}
+
