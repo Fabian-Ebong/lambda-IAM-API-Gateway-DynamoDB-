@@ -1,0 +1,93 @@
+Get Items from the Dynamodb table
+
+{
+    "User_Name": "fm500",  
+    "Service_name": "ceres", 
+    "Entitlements": {        
+      "Tenant_name": "citadel",  
+      "entitlement_name": "e1", 
+      "entitlement_value": "ev1"  
+    }
+}
+
+=================================================
+Put Items into the Dynamodb table from Ranjith
+{
+    "user_name": "rc347",
+    "service_name": "Ceres",
+    "entitlements": [
+        {
+            "entitlement_name": "read",
+            "entitlement_value": "true"
+        },
+        {
+            "entitlement_name": "write",
+            "entitlement_value": "true"
+        }
+    ]
+}
+==============================================
+
+{
+    "User_Name": "fm500",  
+    "Service_name": "ceres", 
+    "Entitlements": {        
+      "Tenant_name": "citadel",  
+      "entitlement_name": "e1", 
+      "entitlement_value": "ev1"  
+    }
+}
+
+
+{
+    "User_Name": "fm500",   // partition key, Type: Sting
+    "Service_name": "ceres",  // sort key, Type: Sting
+    "Entitlements": {         // other attributes, Type: Sting
+      "Tenant_id": "1",       // Type: Sting
+      "Tenant_name": "citadel",  // Type: Sting
+      "entitlement_name": "e1",  //Type: Sting
+      "entitlement_value": "ev1"  // Type: Sting
+      
+    }
+}
+
+{
+    "User_Name": "fm500",   // partition key, Type: Sting
+    "Service_name": "ceres",  // sort key, Type: Sting
+    "Entitlements": {         // other attributes, Type: Sting
+      "Tenant_id": "1",       // Type: Sting
+      "Tenant_name": "citadel",  // Type: Sting
+      "entitlement_name": "e1",  //Type: Sting
+      "entitlement_value": "ev1"  // Type: Sting
+      
+    }
+}
+
+
+{
+    "User_Name": "fm500",   // partition key, Type: Sting
+    "Service_name": "ceres",  // sort key, Type: Sting
+    "Entitlements": {         // other attributes, Type: Sting
+      "Tenant_id": "1",       // Type: Sting
+      "Tenant_name": "citadel",  // Type: Sting
+      "entitlement_name": "e1",  //Type: Sting
+      "entitlement_value": "ev1"  // Type: Sting
+      
+    }
+}
+
+
+{
+    "entitlement-v3": [
+        {   
+            "PutRequest": {
+                "Item": { 
+                    "user_name": { "S": "abcm" },
+                    "service_name": { "S": "Ceres" },
+                    "entitlements": { "S": "Column3 Value" },
+                    "Column4": { "S": "Column4 Value" }
+                }
+            }
+        }
+    ]
+}
