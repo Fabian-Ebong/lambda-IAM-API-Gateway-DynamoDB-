@@ -1,0 +1,141 @@
+OKTA
+
+AWS Account: 
+Region used for testing: us-east-1
+
+IAM 
+    Role: 
+    Policy: will narrow down permissions
+
+NETWORKING COMPONENTS
+
+    VPC
+        name: user-entitlement-project-vpc
+        vpc id:
+        CIDR: 10.0.0.0/16
+        Tenancy: Default
+
+    SUBNETS
+        2 public subnets
+            user-entitlement-project-subnet-public1-us-east-1a
+            user-entitlement-project-subnet-public2-us-east-1b
+
+        2 private subnets
+            user-entitlement-project-subnet-private2-us-east-1b
+            user-entitlement-project-subnet-private1-us-east-1a
+
+    ROUTE TABLES
+        user-entitlement-project-rtb-public
+        user-entitlement-project-rtb-private2-us-east-1b
+        user-entitlement-project-rtb-private1-us-east-1a
+
+    INTERNATE GATEWAY
+        user-entitlement-project-igw
+
+
+    SECURITY GROUPS
+        user-entitlement-public-sg
+        user-entitlement-private-sg
+        user-entitlement-default-sg
+
+    NAT GATEWAY
+        Not currently in user. Will be created when needed
+
+    ENDPOINTS
+        
+        S3 gateway point
+        user-entitlement-project-vpce-s3
+        
+        Dynamodb gateway endpoint
+        user-entitlement-project-dynamodb-gateway-endpoint
+
+    SSH KEYPAIRS 
+        Key Name: userentitlement
+
+COMPUTE COMPONENTS
+
+    1 PUBLIC INSTANCE
+        user-entitlement-public-instance
+
+    2 PRIVATE INSTANCES
+        user-entitlement-private-instance-1
+        user-entitlement-private-instance-2
+
+    1  INTERNAL APPLICATION LOADBALANCER
+        Name: user-entitlement-ALB
+        ALB DNS endpoint: internal-user-entitlement-ALB-813267651.us-east-1.elb.amazonaws.com
+
+    1 TARGET GROUP
+        user-entitlement-private-TG
+
+API GATEWAY
+
+    HTTP API 
+
+        Name: user-entitlement-http-9-26-2022
+
+            HTTP api gateway url that --> ALB --> private instance --> DynamoDB
+          Get metthod on postman  https://ftcaw2tw01.execute-api.us-east-1.amazonaws.com/?TableName=tst&myid=fm500
+
+            Latency: double digits using postman
+
+    REST API
+
+        Name: dynamotest
+            Rest api gateway url that --> Dynamodb via internet
+           Get metthod on postman https://yfxxytx0k2.execute-api.us-east-1.amazonaws.com/myid/myid/fm500
+
+            Latency: tripple digits using postman
+DYNAMODB 
+
+    temp Table name: tst
+
+TESTING 
+    Login to public instance 
+        ssh -i "userentitlement.pem" ec2-user@ec2-54-159-213-xxx7.compute-1.amazonaws.com
+
+    and jump to private instance 1
+        ssh -i "userentitlement.pem" ec2-user@10.0.143.xx
+
+    or jump to private instance 2
+        ssh -i "userentitlement.pem" ec2-user@10.0.147.xx
+
+    From Private instance
+        curl "http://internal-user-entitlement-ALB-813267651.us-east-1.elb.amazonaws/?TableName=tst&myid=fm500"
+
+    From Postman
+
+    HTTP api gateway url that --> ALB --> private instance --> DynamoDB
+    Get method  https://ftcaw2tw01.execute-api.us-east-1.amazonaws.com/?TableName=tst&myid=fm500
+
+    Rest api gateway url that --> Dynamodb via internet
+    Get method  https://yfxxytx0k2.execute-api.us-east-1.amazonaws.com/myid/myid/fm500
+
+
+
+POC Observations:
+
+    HTTP API 
+        latency with double digit miliseconds using postman
+        Traffic flow is through VPC link, private instances, and vpc endpoints 
+        More costly interms of AWS resources used and considering disaster recovery plan
+        Requires more effort to setup and intergrate
+        Needs more learning curve, monitoring, and troubleshooting skills
+
+    REST API 
+        latency with tripple didgit miliseconds using postman
+        Traffic flow is trough the internet 
+        Less costly interms of AWS resources used and considering disaster recovery plan
+        Requires less effort to setup and intergrate
+        Needs less learning curve, monitoring, and troubleshooting skills
+
+
+
+
+
+
+
+
+
+
+
